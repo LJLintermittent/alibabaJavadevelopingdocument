@@ -58,4 +58,11 @@
           System.out.println(e.equals(f));//false
   ~~~
 
+  * 【强制】禁止使用构造方法BigDecimal(double)的方式把double的值转化为BigDecimal对象。说明：BigDecimal(double)存在精度损失的风险，在精确计算或值比较的场景中，可能会导致业务逻辑出现异常。正确方法：使用入参为String的BigDecimal方法，或使用BigDecimal的valueOf(),此方法内部使用了Double的toString，而Double的toString按double实际能表达的精度对尾数进行了截断。
+  
+  ~~~java
+  BigDecimal v1  = new BigDecimal("0.1");
+  BigDecimal v2 = BigDecimal.valueOf(0.1);
+  ~~~
+  
   
