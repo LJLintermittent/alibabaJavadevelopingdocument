@@ -1,3 +1,5 @@
+
+
 # 《阿里巴巴Java开发手册》
 
 ## 第一章 编程规约
@@ -100,6 +102,17 @@
   
   * 【推荐】在getter/setter方法中，不要增加业务逻辑，否则会增加排查问题的难度(mall电商项目中在计算价格时在getter方法中加了计算逻辑，下次注意)
   
-  * 【推荐】
+  * 【推荐】在循环体内，字符串的连接方式使用StringBuilder的append方法扩展
   
-    
+    ~~~wiki
+    说明：下例中，反编译出的字节码文件显示每次循环都会new出一个StringBuilder对象，然后进行append操作，最后通过toString方法返回String对象，造成内存资源的浪费
+    ~~~
+  
+    ~~~java
+    String str = "start";
+    for(int i = 0;i<100;i++){
+        str = str + "hello";
+    }
+    ~~~
+  
+  * 【】
