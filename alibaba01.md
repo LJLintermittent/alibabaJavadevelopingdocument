@@ -65,4 +65,5 @@
   BigDecimal v2 = BigDecimal.valueOf(0.1);
   ~~~
   
-  
+  * 【强制】所有的POJO类属性都必须使用包装数据类型
+  * 
