@@ -125,4 +125,14 @@
   select t1.* from 表1 as t1 ,(select id from 表1 where 条件 limit 100000,20) as t2 where t1.id = t2.id[[
   ~~~
 
-* 【】
+* 【推荐】SQL性能优化的目标，至少达到range级别，要求是ref级别，最好是consts级别
+
+  ~~~wiki
+  说明：
+  consts级别是指单表中最多只有一个匹配行(主键或者唯一索引)，在优化阶段即可读取到数据
+  ref级别是指使用普通的索引
+  range级别是指对索引进行范围检索
+  ~~~
+
+* 
+
