@@ -162,3 +162,43 @@
 
 * 【强制】count(distinct colunm)计算该列除NULL外的不重复行数，注意，count(distinct column1，column2)，如果其中一列全为NULL，那么即使另一列有不同的值，返回的结果也是0
 
+* 【强制】当某一列的值全为NULL时，count(column)的返回结果为0，但sum(column)的返回结果为NULL，因此使用sum()时需要注意NPE问题
+
+  ~~~wiki
+  正例：可以使用如下方法来避免sum的NPE问题，select ifnull(sum(column)，0) from table 
+  ~~~
+
+* 【强制】使用ifnull判断是否为null值
+
+  ~~~wiki
+  说明：
+  NULL与任何值的直接比较都为NULL
+  1)NULL<>NULL的返回结果是NULL，而不是FALSE
+  2)NULL=NULL的返回结果是NULL,而不是TRUE
+  3)NULL<>1的返回结果是NULL，而不是TRUE
+  反例：
+  在SQL语句中，如果在NULL前换行，则会降低可读性。select * from table where column1 is null and column3 is not null;
+  而ISNULL(column)的执行效率要更高一些
+  ~~~
+
+* 【强制】在代码中写分页查询逻辑时，若count为0，则直接返回，避免执行后面的分页语句
+
+* 【强制】不得使用外键与级联，一切外键概念必须在应用层解决
+
+  ~~~wiki
+  说明：以学生和成绩的关系为例，学生表中的student_id是主键，成绩表中的student_id是外键，如果更新学生表中的student_id字段，则同时触发成绩表中的student_id更新，即为级联更新，外键与级联更新使用于单机低并发，不适合分布式，高并发集群，级联更新是强阻塞，存在数据库更新风暴的问题，外键影响数据库的插入速度
+  ~~~
+
+* 【强制】禁止使用存储过程，存储过程难以调试和扩展，更没有移植性
+
+* 【强制】当订正数据(特别是删除或者修改记录操作)时，要先select，避免出现误删除，确认无误后才能执行更新语句
+
+* 【推荐】in操作能避免就避免，若实在避免不了，则需要仔细评估in后面的集合元素数量，控制在1000以内
+
+* 【参考】TRUNCATE TABLE 比DELETE速度快，且使用的系统和事务日志资源少，但TRUNCATE无事务且不触发trigger，有可能造成事故，故不建议在开发代码中使用此语句
+
+  ~~~wiki
+  说明：TRUNCATE TABLE 在功能上与不带where子句的DELETE语句相同
+  ~~~
+
+  
