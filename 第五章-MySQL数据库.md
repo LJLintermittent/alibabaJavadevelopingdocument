@@ -117,4 +117,12 @@
   正例：能够建立的索引类型分为主键索引，唯一索引，普通索引三种，而覆盖索引只是查询的一种效果，用explain的结果，extra列会出现"using index"
   ~~~
 
-  
+* 【推荐】利用延迟关联或者子查询优化超多分页的场景
+
+  ~~~wiki
+  说明：MySQL并不是跳过offset行，而是返回offset+N行，然后放弃前offset行，返回N行，当offset超大时，效率会非常低，要么控制返回的总页数，要么对超过特定阈值的页面进行SQL改写
+  正例：先快速定位需要获取的id段，再关联
+  select t1.* from 表1 as t1 ,(select id from 表1 where 条件 limit 100000,20) as t2 where t1.id = t2.id[[
+  ~~~
+
+* 【】
