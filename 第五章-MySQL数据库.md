@@ -160,5 +160,5 @@
   说明：count(*)会统计值为null的行，而count(列名)不会统计此列值为NULL的行
   ~~~
 
-  
+* 【强制】count(distinct colunm)计算该列除NULL外的不重复行数，注意，count(distinct column1，column2)，如果其中一列全为NULL，那么即使另一列有不同的值，返回的结果也是0
 
