@@ -225,4 +225,16 @@
   说明：配置映射关系，使字段与DO类解耦，方便维护
   ~~~
 
+* 【强制】sql.xml配置参数使用：#{}，#param#，不要使用${}，此种方式容易出现sql注入
+
+* 【强制】Mybatis自带的queryForList(Stringstatement Name，int start，int size)不推荐使用
+
+  ~~~wiki
+  说明：它的实现方式是在数据库中取到statementName对应的sql语句的所有记录，在通过subList取start，size的子集合
+  正例：
+  Map<String，object> map = new hashMap<>(16);
+  map.put("start",start);
+  map.put("size",size);
+  ~~~
+
 * 
