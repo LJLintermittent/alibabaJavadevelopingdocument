@@ -237,4 +237,19 @@
   map.put("size",size);
   ~~~
 
-* 
+* 【强制】不允许直接将hashMap和hashTable作为查询结果集的输出
+
+  ~~~wiki
+  反例；某工程师为避免写一个<resultMap>，直接使用一个hashTable接收数据库返回的结果，结果由于数据库版本不一致，出现日常把bigint转成Long值，而线上把bigint解析为BigInteger的现象，导致线上出现问题
+  ~~~
+
+* 【强制】更新数据库表记录时，必须同时更新记录所对应的修改时间，即update_time字段值为当前时间
+
+* 【推荐】不要写一个大而全的数据更新接口。传入为POJO类，不管是不是自己的目标更新字段都进行update table set c1 = value1,c2=  value2, c3 = value3，是不对的，当执行sql时，不要更新无改动的字段，一是容易出错，二是效率低，三是增加binlog存储
+
+* 【参考】@Transational事务不要滥用。事务会影响数据库的QPS，另外，使用事务的地方需要考虑各方面的回滚方案，包括缓存回滚，搜索引擎回滚，消息补偿和统计修正等
+
+* 【参考】<isEqual>中的compareValue是与属性值对比的常量，一般是数字，表示相等时执行相应的sql语句，<isNotEmpty>表示不为空且不为null时执行，<isNotNull>表示不为NULL时执行
+
+## 阿里巴巴Java开发手册 第五章重点摘录完结
+
